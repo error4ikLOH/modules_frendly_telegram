@@ -1,0 +1,95 @@
+#made by @Djdkxkxys
+
+
+from time import sleep
+from userbot.events import register
+
+
+@register(outgoing=True, pattern='^.history(?: |$)(.*)')
+async def typewriter(typew):
+    await typew.edit("`кидаем бабку на прогиб . . . `")
+    sleep(3)
+    await typew.edit("♪...")
+    number = 1
+    await typew.edit(str(number) + "♪.")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪. .")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪. . .")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪а эта бабка сильнее чем я думал")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪выламываем арматуру. . .")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪.")
+    number = number + 1
+    sleep(0.5)
+    await typew.edit(str(number) + "♪. . .")
+    number = number + 1
+    sleep(0.5)
+    await typew.edit(str(number) + "♪получен новый предмет арматура")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪избиваем бабку арматурой.")
+    number = number + 1
+    sleep(1.5)
+    await typew.edit(str(number) + "♪.")
+    number = number + 1
+    sleep(0.6)
+    await typew.edit(str(number) + "♪. .")
+    number = number + 1
+    sleep(0.5)
+    await typew.edit(str(number) + "♪. . .")
+    number = number + 1
+    sleep(0.5)
+    await typew.edit(str(number) + "♪допрашиваем бабку о заначке")
+    number = number + 1
+    sleep(2.2)
+    await typew.edit(str(number) + "♪допрос.")
+    number = number + 1
+    sleep(0.5)
+    await typew.edit(str(number) + "♪допрос. .")
+    number = number + 1
+    sleep(0.5)
+    await typew.edit(str(number) + "♪допрос . . .")
+    number = number + 1
+    sleep(0.5)
+    await typew.edit(str(number) + "♪бабка созналась")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪убиваем бабку")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪она оказалась демоном")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪демон убивает нас")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪выбран ультра световой ствол")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪стреляем в демона.")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪. .")
+    number = number + 1
+    sleep(0.5)
+    await typew.edit(str(number) + "♪. . .")
+    number = number + 1
+    sleep(0.5)
+    await typew.edit(str(number) + "♪демон наслал на нас дебаф понос")
+    number = number + 1
+    sleep(2.5)
+    await typew.edit(str(number) + "♪все умерли от поноса")
+    number = number + 1
+    sleep(2)
+    await typew.edit(str(number) + "♪демон улетел")
+    number = number + 1
+    sleep(2)
+    await typew.edit("`ТЫ ПРИЕ́МНЫЙ`")
