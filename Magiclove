@@ -1,18 +1,19 @@
+#создатель @Djdkxkxys
 import random
 from .. import utils, loader
 from asyncio import sleep
 
 @loader.tds
 class ILYMod(loader.Module):
-	"""Famous TikTok hearts animation implemented in FTG"""
+	"""Популярный тик ток модуль"""
 	strings = {
 		"name": "LoveMagic"
 	}	
 	
 	async def ilycmd(self, message: "telethon.tl.types.Message") -> None:
-		"""This famous TikTok animation..."""
+		"""Красивая анимация сердечек"""
 		if not message.out:
-			message = await message.respond('ily')
+			message = await message.respond('lov')
 
 		arr = ["❤️", "🧡", "💛", "💚", "💙", "💜", "🤎", "🖤", "💖"]
 		h = "🤍"
