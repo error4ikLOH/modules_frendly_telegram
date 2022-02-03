@@ -1,4 +1,4 @@
-#создатель @Djdkxkxys
+#создатель Гит сылки @Djdkxkxys создатель модуля @hikariatama
 import random
 from .. import utils, loader
 from asyncio import sleep
