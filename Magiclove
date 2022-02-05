@@ -15,8 +15,8 @@ class LOVMod(loader.Module):
 		if not message.out:
 			message = await message.respond('lov')
 
-		arr = ["💙", "❤️", "💛", "💚", "🧡", "💜", "🤎", "🖤", "💖"]
-		h = "🤍"
+		arr = ["🤍", "❤️", "💛", "💚", "🧡", "💜", "🤎", "💙", "💖"]
+		h = "🖤"
 		first_block = ""		
 		for i in "".join([
 				h * 9, "\n",
