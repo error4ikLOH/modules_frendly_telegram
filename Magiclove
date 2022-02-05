@@ -1,21 +1,21 @@
-#создатель Гит сылки @Djdkxkxys создатель модуля @hikariatama
+#прочитал=умничка
 import random
 from .. import utils, loader
 from asyncio import sleep
 
 @loader.tds
 class LOVMod(loader.Module):
-	"""Популярный тик ток модуль"""
+	"""Famous TikTok hearts animation implemented in FTG"""
 	strings = {
 		"name": "LoveMagic"
 	}	
 	
 	async def lovcmd(self, message: "telethon.tl.types.Message") -> None:
-		"""Красивая анимация сердечек"""
+		"""популярное с тик тока"""
 		if not message.out:
 			message = await message.respond('lov')
 
-		arr = ["🖤", "💛", "❤️", "💚", "🧡", "💜", "💙", "💗", "💖"]
+		arr = ["🖤", "💛", "🧡", "💚", "❤️", "💜", "💙", "💗", "💖"]
 		h = "🤍"
 		first_block = ""		
 		for i in "".join([
@@ -67,7 +67,7 @@ class LOVMod(loader.Module):
 			h * 9])
 		await message.edit(fourth)
 		for _ in range(47):
-			fourth = fourth.replace("💛", "💙", 1)
+			fourth = fourth.replace("🤍", "❤️", 1)
 			await message.edit(fourth)
 			await sleep(0.07)
 		for i in range(8):
