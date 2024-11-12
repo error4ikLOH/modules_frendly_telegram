@@ -2,7 +2,7 @@ from .. import loader, utils
 import asyncio
 
 class PintrMod(loader.Module):
-    strings = {"name": "Pintrest_download"}
+    strings = {"name": "Pintr"}
 
     async def client_ready(self, client, db):
         self.client = client
@@ -13,13 +13,13 @@ class PintrMod(loader.Module):
             await message.edit("❌ Вкажіть посилання.")
             return
 
-        bot_entity = await self.client.get_entity("@TopSaverBot")
+        bot_entity = "@TopSaverBot"
         await self.client.send_message(bot_entity, args)
         await message.edit("⏳ Очікуємо відео, о господи які ж в тебе цицьки...")
 
         try:
             async for response in self.client.iter_messages(bot_entity, limit=5):
-                if response.media:
+                if response.media and not response.text:
                     await message.respond(file=response.media)
                     await message.delete()
                     return
