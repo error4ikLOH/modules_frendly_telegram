@@ -17,12 +17,12 @@ class PintrMod(loader.Module):
         await self.client.send_message(bot_entity, args)
         await message.edit("⏳ Очікуємо відео, о господи які ж в тебе цицьки...")
 
-        try:
-            async for response in self.client.iter_messages(bot_entity, limit=5):
-                if response.media and not response.text:
-                    await message.respond(file=response.media)
-                    await message.delete()
-                    return
-            await message.edit("⚠️ Бот не надіслав відео.")
-        except asyncio.TimeoutError:
-            await message.edit("⚠️ Бот не відповів вчасно.")
+        await asyncio.sleep(5)  # Ждем 5 секунд
+
+        async for response in self.client.iter_messages(bot_entity, limit=5):
+            if response.video:
+                await message.respond(file=response.video)
+                await message.delete()
+                return
+
+        await message.edit("⚠️ Не вдалося знайти відео.")
