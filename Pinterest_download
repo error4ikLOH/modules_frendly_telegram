@@ -14,13 +14,13 @@ class PintrMod(loader.Module):
             return
 
         bot_entity = "@TopSaverBot"
+        await message.edit("⏳ Очікуємо відео, о господи оце в тебе цицьки....")
         await self.client.send_message(bot_entity, args)
-        await message.edit("⏳ Очікуємо відео, о господи які ж в тебе цицьки...")
 
-        await asyncio.sleep(5)  # Ждем 5 секунд
+        await asyncio.sleep(5) 
 
         async for response in self.client.iter_messages(bot_entity, limit=5):
-            if response.video:
+            if response.video: 
                 await message.respond(file=response.video)
                 await message.delete()
                 return
