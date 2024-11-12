@@ -2,7 +2,7 @@ from .. import loader, utils
 import asyncio
 
 class PintrMod(loader.Module):
-    strings = {"name": "Pintr"}
+    strings = {"name": "Pintrest_download"}
 
     async def client_ready(self, client, db):
         self.client = client
@@ -15,15 +15,14 @@ class PintrMod(loader.Module):
 
         bot_entity = await self.client.get_entity("@TopSaverBot")
         await self.client.send_message(bot_entity, args)
-        await message.edit("⏳ Очікуємо відео, до речі маєш гарний хуй)))")
+        await message.edit("⏳ Очікуємо відео, о господи які ж в тебе цицьки...")
 
-        async with self.client.conversation(bot_entity) as conv:
-            try:
-                response = await conv.get_response(timeout=15)
+        try:
+            async for response in self.client.iter_messages(bot_entity, limit=5):
                 if response.media:
                     await message.respond(file=response.media)
                     await message.delete()
-                else:
-                    await message.edit("⚠️ Бот надіслав відповідь без відео.")
-            except asyncio.TimeoutError:
-                await message.edit("⚠️ Бот не відповів вчасно.")
+                    return
+            await message.edit("⚠️ Бот не надіслав відео.")
+        except asyncio.TimeoutError:
+            await message.edit("⚠️ Бот не відповів вчасно.")
