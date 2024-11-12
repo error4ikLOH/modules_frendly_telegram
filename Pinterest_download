@@ -14,19 +14,16 @@ class PintrMod(loader.Module):
             return
 
         bot_entity = await self.client.get_entity("@TopSaverBot")
-
-        # Отправляем ссылку боту
         await self.client.send_message(bot_entity, args)
-        await message.edit("⏳ поки очікуємо відео хочу сказати що кохаю Віку, ладно вот відео...")
+        await message.edit("⏳ поки очікуємо відео хочу сказати що кохаю Віку, ладно вот відео..."")
 
-        # Ждем 5 секунд для обработки ботом
-        await asyncio.sleep(5)
-
-        # Проходим по последним сообщениям от бота
-        async for response in self.client.iter_messages(bot_entity, limit=5):
-            # Ищем только сообщения с медиа и без текста (чтобы исключить рекламу)
-            if response.media and not response.message:
-                await message.respond(file=response.media)
-                return
-
-        await message.edit("⚠️ Бот не надіслав медіа у відповідь або надіслав рекламні повідомлення.")
+        async with self.client.conversation(bot_entity) as conv:
+            try:
+                response = await conv.get_response(timeout=15)
+                if response.media:
+                    await message.respond(file=response.media)
+                    await message.delete()
+                else:
+                    await message.edit("⚠️ Відповідь не містить відео.")
+            except asyncio.TimeoutError:
+                await message.edit("⚠️ Бот не відповів вчасно.")
