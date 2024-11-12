@@ -1,28 +1,38 @@
 from .. import loader, utils
 import asyncio
 
-class PintrMod(loader.Module):
-    strings = {"name": "Pintr"}
+class SpizdMod(loader.Module):
+    strings = {
+        "name": "Spizd",
+        "description": "Завантаження відео та фото з YouTube, Instagram та Pinterest.",
+        "usage": ".spizd <посилання> — завантажує медіа з вказаного джерела (YouTube, Instagram, Pinterest)"
+    }
 
     async def client_ready(self, client, db):
         self.client = client
 
-    async def pintrcmd(self, message):
+    async def spizdcmd(self, message):
         args = utils.get_args_raw(message)
         if not args:
-            await message.edit("❌ Вкажіть посилання.")
+            await message.edit("❌ Вкажіть посилання на контент.")
             return
 
         bot_entity = "@TopSaverBot"
-        await message.edit("⏳ Очікуємо відео, о господи оце в тебе цицьки....")
+        await message.edit(f"⏳ Очікуємо медіа, порнофондейшн")
+        await asyncio.sleep(2)
+        await message.edit(f"🤙🏻 ща ща всьо буде😎")
         await self.client.send_message(bot_entity, args)
 
-        await asyncio.sleep(5) 
+        await asyncio.sleep(5)
 
         async for response in self.client.iter_messages(bot_entity, limit=5):
-            if response.video: 
+            if response.video:
                 await message.respond(file=response.video)
                 await message.delete()
                 return
+            elif response.photo:
+                await message.respond(file=response.photo)
+                await message.delete()
+                return
 
-        await message.edit("⚠️ Не вдалося знайти відео.")
+        await message.edit("⚠️ Не вдалося знайти медіа за цим посиланням.")
