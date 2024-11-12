@@ -15,7 +15,7 @@ class PintrMod(loader.Module):
 
         bot_entity = await self.client.get_entity("@TopSaverBot")
         await self.client.send_message(bot_entity, args)
-        await message.edit("⏳ поки очікуємо відео хочу сказати що кохаю Віку, ладно вот відео..."")
+        await message.edit("⏳ Очікуємо відео, до речі маєш гарний хуй)))")
 
         async with self.client.conversation(bot_entity) as conv:
             try:
@@ -24,6 +24,6 @@ class PintrMod(loader.Module):
                     await message.respond(file=response.media)
                     await message.delete()
                 else:
-                    await message.edit("⚠️ Відповідь не містить відео.")
+                    await message.edit("⚠️ Бот надіслав відповідь без відео.")
             except asyncio.TimeoutError:
                 await message.edit("⚠️ Бот не відповів вчасно.")
