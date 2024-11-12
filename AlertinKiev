@@ -1,4 +1,5 @@
-__version__ = (1, 1, 0)
+metag,
+                )__version__ = (1, 1, 0)
 
 import logging
 from asyncio import sleep
@@ -28,8 +29,8 @@ filters = [
 ]
 
 class AirAlertMod(loader.Module):
-    """🇺🇦 Предупреждения о воздушной тревоге, фильтрация по типам угроз."""
-    
+    """🇺🇦 Моніторинг повітряних тривог та інших подій, фільтрація по типам загроз."""
+
     strings = {"name": "AirAlert"}
 
     async def client_ready(self, client, db) -> None:
@@ -43,15 +44,11 @@ class AirAlertMod(loader.Module):
         self.bot_id = (await self.inline.bot.get_me()).id
         self.me = (await client.get_me()).id
 
-        # Подключение к необходимым каналам
         try:
-            await client(
-                JoinChannelRequest(await self.client.get_entity("t.me/airalertmonitor_bot"))
-            )
+            await client(JoinChannelRequest(await self.client.get_entity("t.me/airalertmonitor_bot")))
         except Exception:
             logger.error("Can't join t.me/airalertmonitor_bot")
 
-        # Прочие настройки
         try:
             channel = await self.client.get_entity("t.me/frendly_telegram")
             await client(JoinChannelRequest(channel))
@@ -64,18 +61,17 @@ class AirAlertMod(loader.Module):
             logger.error("Can't react to t.me/frendly_telegram")
 
     async def alertforwardcmd(self, message: Message) -> None:
-        """Перенаправление предупреждений в другие чаты.
-        Для добавления/удаления чатов и установки таблички"""
+        """Перенаправлення попереджень в інші чати."""
         text = utils.get_args_raw(message)
         if text[:3] == "set":
             self.nametag = text[4:]
             self.db.set(self.strings["name"], "nametag", self.nametag)
             return await utils.answer(
                 message,
-                f"🏷 <b>Табличка успешно установлена: <code>{self.nametag}</code></b>",
+                f"🏷 <b>Табличка успішно встановлена: <code>{self.nametag}</code></b>",
             )
         if not text:
-            chats = "<b>Текущие чаты для перенаправления: </b>\n"
+            chats = "<b>Текущі чати для перенаправлення: </b>\n"
             for chat in self.forwards:
                 chats += f"{get_display_name(await self.client.get_entity(chat))}\n"
             await utils.answer(message, chats)
@@ -83,21 +79,21 @@ class AirAlertMod(loader.Module):
         try:
             chat = (await self.client.get_entity(text.replace("https://", ""))).id
         except Exception:
-            await utils.answer(message, "<b>Чат не найден</b>")
+            await utils.answer(message, "<b>Чат не знайдений</b>")
             return
         if chat in self.forwards:
             self.forwards.remove(chat)
             self.db.set(self.strings["name"], "forwards", self.forwards)
-            await utils.answer(message, "<b>Чат успешно удален для перенаправления</b>")
+            await utils.answer(message, "<b>Чат успішно видалено для перенаправлення</b>")
         else:
             self.forwards.append(chat)
             self.db.set(self.strings["name"], "forwards", self.forwards)
             await utils.answer(
-                message, "<b>Чат успешно установлен для перенаправления</b>"
+                message, "<b>Чат успішно встановлений для перенаправлення</b>"
             )
 
     async def alert_inline_handler(self, query: InlineQuery) -> None:
-        """Выбор регионов и фильтров для получения уведомлений."""
+        """Вибір регіонів та фільтрів для отримання повідомлень."""
         text = query.args
         if not text:
             result = filters
@@ -124,7 +120,7 @@ class AirAlertMod(loader.Module):
                     )
                 ),
                 input_message_content=InputTextMessageContent(
-                    f"⌛ Редактирование фильтра <code>{reg}</code>",
+                    f"⌛ Редагування фільтра <code>{reg}</code>",
                     parse_mode="HTML",
                 ),
             )
@@ -137,22 +133,21 @@ class AirAlertMod(loader.Module):
             getattr(message, "out", False)
             and getattr(message, "via_bot_id", False)
             and message.via_bot_id == self.bot_id
-            and "⌛ Редактирование фильтра" in getattr(message, "raw_text", "")
+            and "⌛ Редагування фільтра" in getattr(message, "raw_text", "")
         ):
             self.filters = self.db.get(self.strings["name"], "filters", filters)
             filter_text = message.raw_text[25:]
-            state = "добавлен"
+            state = "додано"
             if filter_text not in self.filters:
                 self.filters.append(filter_text)
             else:
                 self.filters.remove(filter_text)
-                state = "удален"
+                state = "видалено"
             self.db.set(self.strings["name"], "filters", self.filters)
             await self.inline.form(
-                f"<b>Фильтр <code>{filter_text}</code> успешно {state}</b>", message=message
+                f"<b>Фільтр <code>{filter_text}</code> успішно {state}</b>", message=message
             )
 
-        # Отправка сообщений в выбранные чаты
         if (
             getattr(message, "peer_id", False)
             and getattr(message.peer_id, "channel_id", 0) == 1766138888
