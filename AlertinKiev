@@ -1,4 +1,4 @@
-__version__ = (1, 2, 0)
+__version__ = (1, 1, 0)
 
 import logging
 from asyncio import sleep
@@ -33,7 +33,7 @@ class AirAlertMod(loader.Module):
     """🇺🇦 Предупреждение о воздушной тревоге.
     Нужно быть подписаным на @airalertmonitor_bot и включены уведомления в вашем боте"""
 
-    strings = {"name": "KievAlert"}
+    strings = {"name": "AirAlert"}
 
     async def client_ready(self, client, db) -> None:
         self.regions = db.get(self.strings["name"], "regions", [])
