@@ -10,20 +10,23 @@ class PintrMod(loader.Module):
     async def pintrcmd(self, message):
         args = utils.get_args_raw(message)
         if not args:
-            await message.edit("❌ Please provide a link.")
+            await message.edit("❌ Вкажіть посилання.")
             return
-        
-        bot_entity = await self.client.get_entity("@TopSaverBot")
-        
-        await self.client.send_message(bot_entity, args)
-        await message.edit("⏳ Waiting for the video...")
 
-        async with self.client.conversation(bot_entity) as conv:
-            try:
-                response = await conv.get_response(timeout=60)
-                if response.media:
-                    await message.respond("✅ Here is the video from the provided link:", file=response.media)
-                else:
-                    await message.respond("⚠️ No media found in response.")
-            except asyncio.TimeoutError:
-                await message.edit("⚠️ The bot did not respond in time.")
+        bot_entity = await self.client.get_entity("@TopSaverBot")
+
+        # Отправляем ссылку боту
+        await self.client.send_message(bot_entity, args)
+        await message.edit("⏳ поки очікуємо відео хочу сказати що кохаю Віку, ладно вот відео...")
+
+        # Ждем 5 секунд для обработки ботом
+        await asyncio.sleep(5)
+
+        # Проходим по последним сообщениям от бота
+        async for response in self.client.iter_messages(bot_entity, limit=5):
+            # Ищем только сообщения с медиа и без текста (чтобы исключить рекламу)
+            if response.media and not response.message:
+                await message.respond(file=response.media)
+                return
+
+        await message.edit("⚠️ Бот не надіслав медіа у відповідь або надіслав рекламні повідомлення.")
